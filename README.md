@@ -10,6 +10,6 @@ However, there are a few differences from the acoustic and array geometry setup 
 
 - The STFT length was also modified to 512 samples, thereby giving a feature rate of 16 ms. 
 
-- The phase map dimensions are: 4x257
+- The phase map dimensions are: 4x256
 
 The model was trained using Keras with Theano backend. 
