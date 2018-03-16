@@ -37,7 +37,7 @@ You can now run the script
 python cnn_test_github.py
 ```
 
-###Citation
+### Citation
 
 If you find the provided model useful in your research, please cite:
 
