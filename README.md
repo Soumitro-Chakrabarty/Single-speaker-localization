@@ -2,9 +2,9 @@
 
 The repository provides trained models that are related to the CNN based single source localization method presented in the paper
 
-**Title**: [Broadband DOA estimation with convolutional neural networks trained using noise signals](http://ieeexplore.ieee.org/document/8170010/)
-**Authors**: [Soumitro Chakrabarty](https://www.audiolabs-erlangen.de/fau/assistant/chakrabarty), [Emanuël A.P. Habets](https://www.audiolabs-erlangen.de/fau/professor/habets)
-**Conference**: *IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), 2017.*
+**Title**: [Broadband DOA estimation with convolutional neural networks trained using noise signals](http://ieeexplore.ieee.org/document/8170010/)  
+**Authors**: [Soumitro Chakrabarty](https://www.audiolabs-erlangen.de/fau/assistant/chakrabarty), [Emanuël A.P. Habets](https://www.audiolabs-erlangen.de/fau/professor/habets)  
+**Conference**: *IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), 2017.*  
 
 However, there are a few differences from the acoustic and array geometry setup described in the paper. Some of the main differences that should be kept in mind before trying to run the code is as follows:
 
