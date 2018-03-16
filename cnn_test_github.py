@@ -38,4 +38,4 @@ Y_test = np.array(Y_test)                        # size = (Number of time frames
 Output = loaded_model.predict(X_test)           
 
 # write predictions to file
-scipy.io.savemat('DOA_test_OP.mat', mdict={'Output': Output})
+scipy.io.savemat('DOA_OP.mat', mdict={'Output': Output})

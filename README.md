@@ -1,64 +1,52 @@
-# Single-speaker-localization
+# Single-speaker-localization with CNNs
 
-The trained models are related to the single source localization method presented in 
+The repository provides trained models that are related to the CNN based single source localization method presented in the paper
 
-**"Broadband DOA estimation with convolutional neural networks trained using noise signals." WASPAA 2017.** 
+**Title**: [Broadband DOA estimation with convolutional neural networks trained using noise signals](http://ieeexplore.ieee.org/document/8170010/)
+**Authors**: [Soumitro Chakrabarty](https://www.audiolabs-erlangen.de/fau/assistant/chakrabarty), [Emanuël A.P. Habets](https://www.audiolabs-erlangen.de/fau/professor/habets)
+**Conference**: *IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), 2017.*
 
 However, there are a few differences from the acoustic and array geometry setup described in the paper. Some of the main differences that should be kept in mind before trying to run the code is as follows:
 
-- The inter-microphone distance is 0.08 m. This facilitates experiments with Measured RIRs from the Multichannel Impulse Response dataset from Bar-Ilan, with a single trained model.
+- The inter-microphone distance is 0.08 m. 
 
-- The STFT window length was also modified to 512 samples, thereby giving a feature rate of 16 ms. 
+- The STFT window length was modified to 512 samples, thereby giving a feature rate of 16 ms. 
 
-- The phase map dimensions are: 4x256
+- The phase map dimensions are: 4x256, we exclude the highest frequency sub-band.
 
-The model was trained using Keras with Theano backend. 
+A small test dataset, with the features (phase maps) and targets, created by convolving a 13 s long speech signal with Measured RIRs from the [Bar-Ilan Multi-Channel Impulse Response Database](http://www.eng.biu.ac.il/gannot/downloads/) for 9 different angles from the 4 middle microphones in the [8,8,8,8,8,8,8] ULA setup is included (**DOA_test.hdf5**), as well as the output .mat file (**DOA_test_OP.mat**). Running the code would generate an output file called ***DOA_OP.mat*** and it should be the same as **DOA_test_OP.mat**. 
 
-An example code to load the model and weights, and run it with a test file named "DOA_test":
+In addition a MATLAB script to visualize the output is also provided.  
+
+The acoustic setup for the provided test data is as follows:
+
+  - Reverberation time = 0.610 s
+  - Source-array distance = 2 m
+  - SNR = 30 dB (Spatially white Gaussian noise)
+  - Fs= 16 kHz
+
+### Usage
+
+The python dependencies can be installed by using the requirements file 
 
 ```
-from __future__ import print_function
-import numpy as np
-import h5py
-from keras.models import model_from_json, load_model
-from keras.optimizers import SGD, Adam, RMSprop,Adagrad
-import scipy.io
-# Load trained model from the json file
-
-json_file = open('Model_sin_CNN.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-
-# Load weights 
-
-loaded_model.load_weights('Weights_sin_CNN.h5')
-print("Loaded model from disk")
-
-# Define the optimizer and compile the model
-
-lrate = 0.001
-adam = Adam(lr =lrate,beta_1=0.9,beta_2=0.999,epsilon=1e-08)
-loaded_model.compile(loss='categorical_crossentropy', optimizer= adam)
-
-# Read test data from an hdf5 file called DOA_test
-
-Test_data = h5py.File('DOA_test.hdf5')
-X_test = Test_data['features']                   # These are the phase maps for each time frame
-Y_test = Test_data['targets']
-
-# Convert to numpy arrays
-
-X_test = np.array(X_test)                        # size = (Number of time frames,1,256,4)
-Y_test = np.array(Y_test)                        # size = (Number of time frames,37)
-
-# Estimate DOA for each time frame in the test set 
-
-Output = loaded_model.predict(X_test)           
-
-# write predictions to file
-scipy.io.savemat('DOA_test_OP.mat', mdict={'Output': Output})
-  
+pip install -r requirements.txt
+```
+You can now run the script
+```
+python cnn_test_github.py
 ```
 
+###Citation
 
+If you find the provided model useful in your research, please cite:
+
+```
+@INPROCEEDINGS{Chakrabarty2017a
+	author = {S. Chakrabarty and E. A. P. Habets},
+	title = {Broadband DOA Estimation Using Convolutional Neural Netowrks Trained with Noise signals},
+	booktitle = {IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)},
+	year = {2017},
+	month = {Oct.}
+}
+```
