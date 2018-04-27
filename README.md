@@ -17,6 +17,26 @@ However, there are a few differences from the acoustic and array geometry setup 
 
 A small test dataset, with the features (phase maps) and targets, created by convolving a 13 s long speech signal with Measured RIRs from the [Bar-Ilan Multi-Channel Impulse Response Database](http://www.eng.biu.ac.il/gannot/downloads/) for 9 different angles from the 4 middle microphones in the [8,8,8,8,8,8,8] ULA setup is included (**DOA_test.hdf5**), as well as the output .mat file (**DOA_test_OP.mat**). 
 
+Please note that the angle convention in the Bar-Ilan dataset is different to ours. To account for that, the original ground truth angles from the dataset were translated to our convention. The below figure shows the Bar-Ilan convention, as given in their example code. In brackets are the corresponding angles from our convention. All angles are in degrees.
+
+
+          +---------------------------------------------------------+
+          |                                                         |
+          |  (0) 90  -1-2-3-4- mic array -5-6-7-8-  270 (180)       |
+          |                                                         |
+          |   (15) 75                               285 (165)       |
+          |                                                         |
+          |    (30) 60                             300 (150)        |
+          |                                                         |
+          |      (45) 45                         315 (135)          |
+          |                                                         |
+          |         (60) 30                   330 (120)             |     
+          |               (75) 15        345 (105)                  |         
+          |                     (90) 0                              |
+          |                                                         |
+          +---------------------------------------------------------+
+
+
 Running the code would generate an output file called ***DOA_OP.mat*** and it should be the same as **DOA_test_OP.mat**. 
 
 In addition a MATLAB script to visualize the output is also provided.  
