@@ -60,6 +60,55 @@ You can now run the script
 python cnn_test_github.py
 ```
 
+### Training data generation - Pseudo code
+
+**Generate RIRs**
+
+This pseudo-code explains the generation of RIRs for the different acoustic conditions. For the specific acoustic parameters used in this work, please refer to Table 1.
+
+```python
+Select R rooms of different sizes
+
+for nb_room in range(1,R) 
+    Randomly select P array positions
+    Choose D source-array distances
+    for nb_pos in range(1,P)
+        for nb_dist in range(1,D)
+            Generate RIRs corresponding to each of the 37 discrete DOAs and M microphones
+
+Store the NR = R*P*D RIRs
+
+NOTE: Each RIR file corresponds to a specific acoustic setup and contains 37 x M source-mic RIRs for each DOA and microphone in the array
+```
+In the referenced paper:
+  - R = 2 
+  - P = 7
+  - D = 2
+  
+**Training data - Features and Target generation**
+
+```python
+
+for nb_rir in range(1,NR)
+    for nb_ang in range(1,37)
+        sig_anechoic = 2 s long white Gaussian noise  # each iteration a different variance was used
+        sig_spatial = sig_anechoic convolved with the M RIRs
+        sig_noisy = sig_spatial + noise  ## noise = spatially uncorrelated white noise with a randomly chosen SNR in the range of [0,20]dB
+        
+        sig_STFT = STFT(sig_noisy)   ## size M (mics) x K (frequency bins) x N (time frames)
+        phase_component = angle(sig_STFT)
+        
+        for nb_frame in range(1,N)
+            phase_map(nb_frame) = phase_component(:,:,nb_frame) # matrix of size M x K taken from phase_component
+            target(nb_frame) = one-hot encoded vector of size 37 x 1 with the true DOA label as 1, rest 0s
+        
+# Training pairs
+X_train = phase_map tensor of size M x K x 1 x (N*NR*37) # resizing done for input to Conv2D in Keras
+Y_train = target matrix of size 37 x (N*NR*37)
+
+NOTE: Since the SNRs for each nb_ang and nb_rir is randomly chosen, the whole procedure was repeated 
+several times to have a balanced dataset in order to avoid a specific SNR bias. The size of the training data was influenced by the memory constraints.
+```
 ### Citation
 
 If you find the provided model useful in your research, please cite:
