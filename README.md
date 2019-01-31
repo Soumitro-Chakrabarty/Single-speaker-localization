@@ -107,7 +107,8 @@ X_train = phase_map tensor of size M x K x 1 x (N*NR*37) # resizing done for inp
 Y_train = target matrix of size 37 x (N*NR*37)
 
 NOTE: Since the SNRs for each nb_ang and nb_rir is randomly chosen, the whole procedure was repeated 
-several times to have a balanced dataset in order to avoid a specific SNR bias. The size of the training data was influenced by the memory constraints.
+several times to have a balanced dataset in order to avoid a specific SNR bias. 
+The size of the training data was influenced by the memory constraints.
 ```
 ### Citation
 
