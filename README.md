@@ -13,7 +13,7 @@ However, there are a few differences from the acoustic and array geometry setup 
 
 - The STFT window length was modified to 512 samples, thereby giving a feature rate of 16 ms. 
 
-- The phase map dimensions are: 4x256, we exclude the highest frequency sub-band.
+- The phase map dimensions are: 4x256, we exclude the lowest frequency sub-band.
 
 A small test dataset, with the features (phase maps) and targets, created by convolving a 13 s long speech signal with Measured RIRs from the [Bar-Ilan Multi-Channel Impulse Response Database](http://www.eng.biu.ac.il/gannot/downloads/) for 9 different angles from the 4 middle microphones in the [8,8,8,8,8,8,8] ULA setup is included (**DOA_test.hdf5**), as well as the output .mat file (**DOA_test_OP.mat**). 
 
